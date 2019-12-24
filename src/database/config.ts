@@ -1,5 +1,6 @@
 import path from "path";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import DatabaseNamingStrategy from "./namingStrategy";
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: "postgres",
@@ -11,7 +12,8 @@ const typeOrmConfig: PostgresConnectionOptions = {
   synchronize: false,
   logging: false,
   entities: [`${path.join(__dirname, "..", "models")}/*.[ts]s`],
-  migrations: [`${__dirname}/models/*.[ts]s`]
+  migrations: [`${__dirname}/models/*.[ts]s`],
+  namingStrategy: new DatabaseNamingStrategy()
 };
 
 export { typeOrmConfig };

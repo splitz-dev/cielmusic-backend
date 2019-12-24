@@ -1,5 +1,5 @@
-import { connectDatabase } from "./database";
 import { runServer } from "./server";
+import { connectDatabase } from "./database";
 
 const PORT = Number(process.env.PORT) || 3000; // default port
 const HOST = process.env.HOST || "localhost"; // localhost
