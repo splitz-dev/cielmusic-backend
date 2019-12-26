@@ -9,7 +9,7 @@ const typeOrmConfig: PostgresConnectionOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PW,
   database: process.env.DATABASE,
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: [`${path.join(__dirname, "..", "models")}/*.[ts]s`],
   migrations: [`${__dirname}/models/*.[ts]s`],
