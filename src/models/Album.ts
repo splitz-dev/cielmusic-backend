@@ -2,32 +2,29 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  Unique,
-  OneToOne
+  OneToMany,
+  ManyToOne
 } from "typeorm";
 import { Base } from "./Base";
+import { Music } from "./Music";
 import { Artist } from "./Artist";
 
 @Entity({ orderBy: { createdAt: "DESC" } })
-@Unique(["email"])
-export class User extends Base {
+export class Album extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
   @Column({ length: 50 })
-  email!: string;
-  @Column({ length: 10 })
-  nickname!: string;
-  @Column({ length: 64 })
-  password!: string;
+  name!: string;
   @Column({ length: 200, nullable: true })
   photo!: string;
-  @Column({ nullable: true })
-  lastLogin!: Date;
-  @Column({ nullable: true })
-  verifiedAt!: Date;
-  @OneToOne(
+  @OneToMany(
+    _ => Music,
+    music => music.album
+  )
+  public musics?: Music[];
+  @ManyToOne(
     _ => Artist,
     artist => artist.id
   )
-  public artist?: Artist;
+  public artist!: number;
 }
