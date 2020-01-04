@@ -28,6 +28,7 @@
     "pluralize": "^8.0.0",
     "routing-controllers": "^0.8.0",
     "signale": "^1.4.0",
+    "sync-exec": "^0.6.2",
     "typeorm": "^0.2.22",
     "yarg": "^1.0.8"
   },
