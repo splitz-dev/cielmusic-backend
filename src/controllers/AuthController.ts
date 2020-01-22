@@ -11,7 +11,7 @@ import { User } from '../models/User';
 import { UserService } from '../services/UserService';
 import { UserCreateDto } from '../Dto/UserCreateDto';
 
-@JsonController()
+@JsonController('/auth')
 export class AuthController {
   @Post('/login')
   async signIn(
