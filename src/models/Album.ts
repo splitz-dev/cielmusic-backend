@@ -3,17 +3,17 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
-  ManyToOne
-} from "typeorm";
-import { Base } from "./Base";
-import { Music } from "./Music";
-import { Artist } from "./Artist";
+  ManyToOne,
+} from 'typeorm';
+import { Base } from './Base';
+import { Music } from './Music';
+import { Artist } from './Artist';
 
-@Entity({ orderBy: { createdAt: "DESC" } })
+@Entity({ orderBy: { createdAt: 'DESC' } })
 export class Album extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column({ length: 50 })
+  @Column({ length: 100 })
   name!: string;
   @Column({ length: 200, nullable: true })
   photo!: string;

@@ -3,23 +3,23 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne
-} from "typeorm";
-import { Base } from "./Base";
-import { MusicType } from "./enum";
-import { Album } from "./Album";
-import { Artist } from "./Artist";
-import { File } from "./File";
+  OneToOne,
+} from 'typeorm';
+import { Base } from './Base';
+import { MusicType } from './enum';
+import { Album } from './Album';
+import { Artist } from './Artist';
+import { File } from './File';
 
-@Entity({ orderBy: { createdAt: "DESC" } })
+@Entity({ orderBy: { createdAt: 'DESC' } })
 export class Music extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column({ length: 50 })
+  @Column({ length: 200 })
   name!: string;
   @Column()
   order!: number;
-  @Column({ type: "enum", enum: MusicType })
+  @Column({ type: 'enum', enum: MusicType })
   type!: MusicType;
   @Column({ default: false })
   isTitle!: boolean;
