@@ -1,9 +1,4 @@
-import {
-  DeepPartial,
-  FindManyOptions,
-  FindOneOptions,
-  Repository
-} from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, Repository } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 export abstract class BaseRepository<T> extends Repository<T> {
@@ -13,7 +8,7 @@ export abstract class BaseRepository<T> extends Repository<T> {
   async updateAndGet(
     id: string | number,
     item: QueryDeepPartialEntity<T>,
-    findOptions?: FindOneOptions<T>
+    findOptions?: FindOneOptions<T>,
   ): Promise<T> {
     await this.update(id, item);
     return <Promise<T>>this.findOne({ ...findOptions, where: { id } });
@@ -44,10 +39,7 @@ export abstract class BaseRepository<T> extends Repository<T> {
   // }
 
   // ID로 찾기
-  async findById(
-    id: string | number,
-    options?: FindOneOptions<T>
-  ): Promise<T | undefined> {
+  async findById(id: string | number, options?: FindOneOptions<T>): Promise<T | undefined> {
     return !id ? undefined : this.findOne({ where: { id }, ...options });
   }
 

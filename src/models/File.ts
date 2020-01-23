@@ -6,13 +6,16 @@ import { Music } from "./Music";
 export class File extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
+
   @Column({ length: 200, nullable: true })
   url!: string;
+
   @Column({ default: 0 })
   read!: number;
+
   @OneToOne(
-    _ => Music,
-    music => music.id
+    (_) => Music,
+    (music) => music.id,
   )
   public music!: number;
 }

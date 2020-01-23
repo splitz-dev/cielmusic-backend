@@ -3,10 +3,7 @@ import { DefaultNamingStrategy } from "typeorm";
 import { snakeCase } from "typeorm/util/StringUtils";
 
 export default class NamingStrategy extends DefaultNamingStrategy {
-  public tableName(
-    targetName: string,
-    userSpecifiedName: string | undefined
-  ): string {
+  public tableName(targetName: string, userSpecifiedName: string | undefined): string {
     return plural(snakeCase(userSpecifiedName || targetName));
   }
 
@@ -22,11 +19,7 @@ export default class NamingStrategy extends DefaultNamingStrategy {
     return snakeCase(`${relationName}_${referencedColumnName}`);
   }
 
-  public joinTableColumnName(
-    tableName: string,
-    propertyName: string,
-    columnName: string
-  ) {
+  public joinTableColumnName(tableName: string, propertyName: string, columnName: string) {
     return snakeCase(`${tableName}_${columnName || propertyName}`);
   }
 }

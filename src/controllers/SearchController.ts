@@ -1,12 +1,13 @@
-import { Get, Post, BodyParam, JsonController } from 'routing-controllers';
-import { SearchService } from '../services/SearchService';
-@JsonController('/search')
+import { Get, Post, BodyParam, JsonController } from "routing-controllers";
+import { SearchService } from "../services/SearchService";
+
+@JsonController("/search")
 export class SearchController {
-  @Get('/music')
+  @Get("/music")
   async searchMusic(
-    @BodyParam('query') query: string,
-    @BodyParam('take') take: number,
-    @BodyParam('skip') skip: number
+    @BodyParam("query") query: string,
+    @BodyParam("take") take: number,
+    @BodyParam("skip") skip: number,
   ) {
     const music = await new SearchService().getSongByTitle(query, take, skip);
     return {
@@ -14,11 +15,11 @@ export class SearchController {
     };
   }
 
-  @Get('/album')
+  @Get("/album")
   async searchAlbum(
-    @BodyParam('query') query: string,
-    @BodyParam('take') take: number,
-    @BodyParam('skip') skip: number
+    @BodyParam("query") query: string,
+    @BodyParam("take") take: number,
+    @BodyParam("skip") skip: number,
   ) {
     const album = await new SearchService().getAlbumByTitle(query, take, skip);
     return {
@@ -26,19 +27,22 @@ export class SearchController {
     };
   }
 
-  @Get('/artist')
+  @Get("/artist")
   async searchArtist(
-    @BodyParam('query') query: string,
-    @BodyParam('take') take: number,
-    @BodyParam('skip') skip: number
+    @BodyParam("query") query: string,
+    @BodyParam("take") take: number,
+    @BodyParam("skip") skip: number,
   ) {
-    const artist = await new SearchService().getArtistByTitle(
-      query,
-      take,
-      skip
-    );
+    const artist = await new SearchService().getArtistByTitle(query, take, skip);
     return {
       result: artist,
+    };
+  }
+
+  @Post("/fetch")
+  async addData() {
+    return {
+      result: "user",
     };
   }
 }

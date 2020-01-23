@@ -13,7 +13,7 @@ const typeOrmConfig: PostgresConnectionOptions = {
   logging: false,
   entities: [`${path.join(__dirname, "..", "models")}/*.[ts]s`],
   migrations: [`${__dirname}/models/*.[ts]s`],
-  namingStrategy: new DatabaseNamingStrategy()
+  namingStrategy: new DatabaseNamingStrategy(),
 };
 
 export { typeOrmConfig };

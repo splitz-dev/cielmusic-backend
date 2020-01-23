@@ -9,7 +9,7 @@ export class AuthHelper {
   static generate(info: AuthModel) {
     const privateKey: string = process.env.JWT_SECRET || "";
     return jsonwebtoken.sign(info, privateKey, {
-      expiresIn: "30d"
+      expiresIn: "30d",
     });
   }
 
