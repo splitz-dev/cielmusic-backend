@@ -1,26 +1,23 @@
-import { DeleteResult, FindConditions, getCustomRepository } from 'typeorm';
-import { UserCreateDto } from '../Dto/UserCreateDto';
-import { UserUpdateDto } from '../Dto/UserUpdateDto';
-import { User } from '../models/User';
-import { AuthHelper } from '../utils/AuthHelper';
-import { UserRepository } from './../repositories/UserRepository';
+import { DeleteResult, FindConditions, getCustomRepository } from "typeorm";
+import { UserCreateDto } from "../Dto/UserCreateDto";
+import { UserUpdateDto } from "../Dto/UserUpdateDto";
+import { User } from "../models/User";
+import { AuthHelper } from "../utils/AuthHelper";
+import { UserRepository } from "../repositories/UserRepository";
 
 export class UserService {
   private userRepository: UserRepository;
-
-  private userRelations = ['artist'];
 
   constructor() {
     this.userRepository = getCustomRepository(UserRepository);
   }
 
   async update(id: number, userForm: UserUpdateDto) {
-    if (userForm.password !== userForm.passwordConfirmation)
-      throw Error('PASSWORD_IS_WRONG');
+    if (userForm.password !== userForm.passwordConfirmation) throw Error("PASSWORD_IS_WRONG");
     const newUser = await this.userRepository.findById(id);
-    if (!newUser) throw Error('NO_USER');
-    if (!!userForm.photo) newUser.photo = userForm.photo;
-    if (!!userForm.nickname) newUser.nickname = userForm.nickname;
+    if (!newUser) throw Error("NO_USER");
+    if (userForm.photo) newUser.photo = userForm.photo;
+    if (userForm.nickname) newUser.nickname = userForm.nickname;
     return this.userRepository.save(newUser);
   }
 
@@ -31,36 +28,33 @@ export class UserService {
   async getUsers(
     take: number,
     skip: number,
-    where?: FindConditions<User>
+    where?: FindConditions<User>,
   ): Promise<[User[], number]> {
     const result = await this.userRepository.findWithCount({
       take,
       skip,
       where,
-      relations: this.userRelations,
     });
     return result;
   }
 
   getUserById(id: number): Promise<User | undefined> {
-    return this.userRepository.findById(id, { relations: this.userRelations });
+    return this.userRepository.findById(id);
   }
 
   getUserByEmail(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { email },
-      relations: this.userRelations,
     });
   }
 
   getUserByToken(token: string): Promise<User | undefined> {
     const extractedToken = AuthHelper.extract(token);
     if (!extractedToken) {
-      throw new Error('Token is null');
+      throw new Error("Token is null");
     }
     return this.userRepository.findOne({
       where: { email: extractedToken.email },
-      relations: this.userRelations,
     });
   }
 
@@ -68,14 +62,13 @@ export class UserService {
   /**
    * 로그인
    */
-  async signIn(email: string, password: string): Promise<Object> {
+  async signIn(email: string, password: string): Promise<Record<string, any>> {
     const user = await this.userRepository.findOne({
       where: { email },
     });
     // 이메일 또는 패스워드 불일치
-    if (!user) throw Error('DOES_NOT_EXIST');
-    if (user.password !== AuthHelper.hash(password))
-      throw Error('PASSWORD DOES NOT MATCH');
+    if (!user) throw Error("DOES_NOT_EXIST");
+    if (user.password !== AuthHelper.hash(password)) throw Error("PASSWORD DOES NOT MATCH");
     // 로그인 성공시 token 생성 후 갱신
     const token = AuthHelper.generate({ email });
     return {
@@ -94,10 +87,9 @@ export class UserService {
       where: { email: userForm.email },
     });
     // 이미 같은 이메일 존재
-    if (!!user) throw Error('DUPLICATE_USER');
+    if (user) throw Error("DUPLICATE_USER");
     // 패스워드 확인 불일치
-    if (userForm.password !== userForm.passwordConfirmation)
-      throw Error('PASSWORDS_ARE_NOT_EQUAL');
+    if (userForm.password !== userForm.passwordConfirmation) throw Error("PASSWORDS_ARE_NOT_EQUAL");
     return this.userRepository.save({
       email: userForm.email,
       password: AuthHelper.hash(userForm.password),
@@ -113,7 +105,7 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { email },
     });
-    if (!user) throw Error('DOES_NOT_EXIST');
+    if (!user) throw Error("DOES_NOT_EXIST");
     // TODO: 어떤 결과 값을 주어야할지 논의 필요!
     return {};
   }
@@ -124,10 +116,9 @@ export class UserService {
   async changePassword(
     userId: number,
     password: string,
-    passwordConfirmation: string
+    passwordConfirmation: string,
   ): Promise<User | undefined> {
-    if (password !== passwordConfirmation)
-      throw Error('PASSWORDS_ARE_NOT_EQUAL');
+    if (password !== passwordConfirmation) throw Error("PASSWORDS_ARE_NOT_EQUAL");
     return this.userRepository.updateAndGet(userId, {
       password,
     });

@@ -1,36 +1,24 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne
-} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Base } from "./Base";
 import { Album } from "./Album";
-import { Music } from "./Music";
-import { User } from "./User";
 
 @Entity({ orderBy: { createdAt: "DESC" } })
 export class Artist extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column({ length: 50 })
+
+  @Column({ length: 100 })
   name!: string;
+
   @Column({ length: 200, nullable: true })
   photo!: string;
+
   @OneToMany(
-    _ => Music,
-    music => music.artist
-  )
-  public musics?: Music[];
-  @OneToMany(
-    _ => Album,
-    album => album.id
+    (_) => Album,
+    (album) => album.id,
   )
   public albums?: Album[];
-  @OneToOne(
-    _ => User,
-    user => user.id
-  )
-  public user!: User;
+
+  @Column({ nullable: true })
+  userId!: number;
 }

@@ -6,17 +6,17 @@ import {
   Get,
   JsonController,
   Post,
-} from 'routing-controllers';
-import { User } from '../models/User';
-import { UserService } from '../services/UserService';
-import { UserCreateDto } from '../Dto/UserCreateDto';
+} from "routing-controllers";
+import { User } from "../models/User";
+import { UserService } from "../services/UserService";
+import { UserCreateDto } from "../Dto/UserCreateDto";
 
-@JsonController()
+@JsonController("/auth")
 export class AuthController {
-  @Post('/login')
+  @Post("/login")
   async signIn(
-    @BodyParam('email', { required: true, validate: true }) email: string,
-    @BodyParam('password', { required: true, validate: true }) password: string
+    @BodyParam("email", { required: true, validate: true }) email: string,
+    @BodyParam("password", { required: true, validate: true }) password: string,
   ) {
     const user = await new UserService().signIn(email, password);
     return {
@@ -25,10 +25,8 @@ export class AuthController {
     };
   }
 
-  @Post('/register')
-  async signUp(
-    @Body({ required: true, validate: true }) userForm: UserCreateDto
-  ) {
+  @Post("/register")
+  async signUp(@Body({ required: true, validate: true }) userForm: UserCreateDto) {
     const user = await new UserService().signUp(userForm);
     return {
       ...user,
@@ -37,7 +35,7 @@ export class AuthController {
   }
 
   @Authorized()
-  @Get('/logout')
+  @Get("/logout")
   signOut() {
     return {
       result: `sign out successfully`,
@@ -45,7 +43,7 @@ export class AuthController {
   }
 
   // 토큰으로 내 정보 호출
-  @Get('/myinfo')
+  @Get("/myinfo")
   getUser(@CurrentUser({ required: true }) user: User) {
     return {
       user,

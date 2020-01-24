@@ -1,41 +1,43 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne
-} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn } from "typeorm";
 import { Base } from "./Base";
 import { MusicType } from "./enum";
 import { Album } from "./Album";
-import { Artist } from "./Artist";
 import { File } from "./File";
+import { Artist } from "./Artist";
 
 @Entity({ orderBy: { createdAt: "DESC" } })
 export class Music extends Base {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column({ length: 50 })
+
+  @Column({ length: 200 })
   name!: string;
+
   @Column()
   order!: number;
+
   @Column({ type: "enum", enum: MusicType })
   type!: MusicType;
+
   @Column({ default: false })
   isTitle!: boolean;
+
   @ManyToOne(
-    _ => Album,
-    album => album.id
+    (_) => Album,
+    (album) => album,
   )
-  public album!: number;
+  public album!: Album;
+
   @ManyToOne(
-    _ => Artist,
-    artist => artist.id
+    (_) => Album,
+    (album) => album.artist,
   )
-  public artist!: number;
+  public artist!: Artist;
+
   @OneToOne(
-    _ => File,
-    file => file.id
+    (_) => File,
+    (file) => file,
   )
-  public file!: number;
+  @JoinColumn({ name: "file_id" })
+  public file!: File;
 }
