@@ -13,6 +13,10 @@ export class SearchService {
 
   private albumRepository: AlbumRepository;
 
+  private musicRelations = ["album", "file", "artist"];
+
+  private albumRelations = ["artist"];
+
   constructor() {
     this.musicRepository = getCustomRepository(MusicRepository);
     this.artistRepository = getCustomRepository(ArtistRepository);
@@ -24,6 +28,7 @@ export class SearchService {
       take,
       skip,
       where: { name: Like(`%${query}%`) },
+      relations: this.musicRelations,
     });
     return result;
   }
@@ -33,6 +38,7 @@ export class SearchService {
       take,
       skip,
       where: { name: Like(`%${query}%`) },
+      relations: this.albumRelations,
     });
     return result;
   }

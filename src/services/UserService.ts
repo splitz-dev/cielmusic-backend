@@ -8,8 +8,6 @@ import { UserRepository } from "../repositories/UserRepository";
 export class UserService {
   private userRepository: UserRepository;
 
-  private userRelations = ["artist"];
-
   constructor() {
     this.userRepository = getCustomRepository(UserRepository);
   }
@@ -36,19 +34,17 @@ export class UserService {
       take,
       skip,
       where,
-      relations: this.userRelations,
     });
     return result;
   }
 
   getUserById(id: number): Promise<User | undefined> {
-    return this.userRepository.findById(id, { relations: this.userRelations });
+    return this.userRepository.findById(id);
   }
 
   getUserByEmail(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { email },
-      relations: this.userRelations,
     });
   }
 
@@ -59,7 +55,6 @@ export class UserService {
     }
     return this.userRepository.findOne({
       where: { email: extractedToken.email },
-      relations: this.userRelations,
     });
   }
 
