@@ -9,7 +9,7 @@ import { Artist } from "../models/Artist";
 import { Album } from "../models/Album";
 import { Music } from "../models/Music";
 import { File } from "../models/File";
-import { MusicType } from "../models/enum";
+import { MusicType } from "../models/Enum";
 
 export class CrawlService {
   private musicRepository: MusicRepository;
