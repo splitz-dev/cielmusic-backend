@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn } from "typeorm";
 import { Base } from "./Base";
-import { MusicType } from "./enum";
+import { MusicType } from "./Enum";
 import { Album } from "./Album";
 import { File } from "./File";
 import { Artist } from "./Artist";
