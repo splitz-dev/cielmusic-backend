@@ -22,7 +22,7 @@ export class Album extends Base {
 
   @ManyToOne(
     (_) => Artist,
-    (artist) => artist.id,
+    (artist) => artist,
   )
-  public artist!: number;
+  public artist!: Artist;
 }

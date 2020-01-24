@@ -1,6 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique, OneToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { Base } from "./Base";
-import { Artist } from "./Artist";
 
 @Entity({ orderBy: { createdAt: "DESC" } })
 @Unique(["email"])
@@ -25,10 +24,4 @@ export class User extends Base {
 
   @Column({ nullable: true })
   verifiedAt!: Date;
-
-  @OneToOne(
-    (_) => Artist,
-    (artist) => artist.id,
-  )
-  public artist?: Artist;
 }

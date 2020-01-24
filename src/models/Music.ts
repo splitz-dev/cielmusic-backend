@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn } from "typeorm";
 import { Base } from "./Base";
 import { MusicType } from "./enum";
 import { Album } from "./Album";
-import { Artist } from "./Artist";
 import { File } from "./File";
+import { Artist } from "./Artist";
 
 @Entity({ orderBy: { createdAt: "DESC" } })
 export class Music extends Base {
@@ -24,19 +24,20 @@ export class Music extends Base {
 
   @ManyToOne(
     (_) => Album,
-    (album) => album.id,
+    (album) => album,
   )
-  public album!: number;
+  public album!: Album;
 
   @ManyToOne(
-    (_) => Artist,
-    (artist) => artist.id,
+    (_) => Album,
+    (album) => album.artist,
   )
-  public artist!: number;
+  public artist!: Artist;
 
   @OneToOne(
     (_) => File,
-    (file) => file.id,
+    (file) => file,
   )
-  public file!: number;
+  @JoinColumn({ name: "file_id" })
+  public file!: File;
 }
