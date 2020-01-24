@@ -1,6 +1,6 @@
 import path from "path";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
-import DatabaseNamingStrategy from "./namingStrategy";
+import DatabaseNamingStrategy from "./NamingStrategy";
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: "postgres",
