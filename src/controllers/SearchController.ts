@@ -4,6 +4,20 @@ import { CrawlService } from "../services/CrawlService";
 
 @JsonController("/search")
 export class SearchController {
+  @Get("/")
+  async totalSearchMusic(@QueryParam("query") query: string) {
+    const music = await new SearchService().getSongByTitle(query, 5, 0);
+    const album = await new SearchService().getAlbumByTitle(query, 5, 0);
+    const artist = await new SearchService().getArtistByTitle(query, 3, 0);
+    return {
+      result: {
+        music,
+        album,
+        artist,
+      },
+    };
+  }
+
   @Get("/music")
   async searchMusic(
     @QueryParam("query") query: string,
