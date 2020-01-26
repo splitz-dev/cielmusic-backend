@@ -108,6 +108,7 @@ export class CrawlService {
     music.isTitle = songData.isTitle;
     music.type = MusicType.YOUTUBE;
     music.album = albumRow;
+    music.artist = artistRow;
     music.file = fileRow;
     let musicRow = await this.musicRepository.findOne(music);
     if (!musicRow) musicRow = await this.musicRepository.save(music);
